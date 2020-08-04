@@ -1,0 +1,165 @@
+window:
+    decorations:
+        none
+background_opacity: 1.0
+font:
+  # The normal (roman) font face to use.
+  normal:
+    family: Menlo
+    style: Regular
+
+  # The bold font face
+  bold:
+    family: Menlo
+    style: Bold
+
+  # The italic font face
+  italic:
+    family: Menlo
+    style: Italic
+
+  # Point size of the font
+  size: 16
+  # Offset is the extra space around each character. offset.y can be thought of
+  # as modifying the linespacing, and offset.x as modifying the letter spacing.
+  offset:
+    x: 0
+    y: 0
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increase the x offset to move the glyph to
+  # the right, increase the y offset to move the glyph upward.
+  glyph_offset:
+    x: 0
+    y: 0
+  # OS X only: use thin stroke font rendering. Thin strokes are suitable
+  # for retina displays, but for non-retina you probably want this set to
+  # false.
+  use_thin_strokes: true
+  # Colors (One Dark)
+env:
+  TERM: xterm-256color
+# # Colors (Gruvbox light)
+# colors:
+#   # Default colors
+#   primary:
+#     # hard contrast: background = '0xf9f5d7'
+#     background: '0xfbf1c7'
+#     # soft contrast: background = '0xf2e5bc'
+#     foreground: '0x3c3836'
+
+#   # Normal colors
+#   normal:
+#     black:   '0xfbf1c7'
+#     red:     '0xcc241d'
+#     green:   '0x98971a'
+#     yellow:  '0xd79921'
+#     blue:    '0x458588'
+#     magenta: '0xb16286'
+#     cyan:    '0x689d6a'
+#     white:   '0x7c6f64'
+
+#   # Bright colors
+#   bright:
+#     black:   '0x928374'
+#     red:     '0x9d0006'
+#     green:   '0x79740e'
+#     yellow:  '0xb57614'
+#     blue:    '0x076678'
+#     magenta: '0x8f3f71'
+#     cyan:    '0x427b58'
+#     white:   '0x3c3836'
+# Palenight
+# colors:
+#    # Default colors
+#    primary:
+#      background: '0x292d3e'
+#      foreground: '0xD8DEE9'
+
+#    # Normal colors
+#    normal:
+#      black:   '0x3B4252'
+#      red:     '0xff5370'
+#      green:   '0xA3BE8C'
+#      yellow:  '0xEBCB8B'
+#      blue:    '0x81A1C1'
+#      magenta: '0xB48EAD'
+#      cyan:    '0x88C0D0'
+#      white:   '0xE5E9F0'
+#      orange:  '0xf78c6c'
+
+#    # Bright colors
+#    bright:
+#      black:   '0x3B4252'
+#      red:     '0xff5370'
+#      green:   '0xA3BE8C'
+#      yellow:  '0xEBCB8B'
+#      blue:    '0x81A1C1'
+#      magenta: '0xB48EAD'
+#      cyan:    '0x88C0D0'
+#      white:   '0xE5E9F0'
+#      orange:  '0xf78c6c'
+# Colors (Gruvbox dark)
+colors:
+  # Default colors
+  primary:
+    # hard contrast: background = '#1d2021'
+    background: '#282828'
+    # soft contrast: background = '#32302f'
+    foreground: '#ebdbb2'
+
+  # Normal colors
+  normal:
+    black:   '#282828'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#a89984'
+
+  # Bright colors
+  bright:
+    black:   '#928374'
+    red:     '#fb4934'
+    green:   '#b8bb26'
+    yellow:  '#fabd2f'
+    blue:    '#83a598'
+    magenta: '#d3869b'
+    cyan:    '#8ec07c'
+    white:   '#ebdbb2'
+# github colors 
+# colors:
+#   # Default colors
+#   primary:
+#     # hard contrast: background = '#1d2021'
+#     background: '#282828'
+#     # soft contrast: background = '#32302f'
+#     foreground: '#ebdbb2'
+
+#   # Normal colors
+#   normal:
+#     black:   '#1b1f23'
+#     red:     '#d73a49'
+#     green:   '#28a745'
+#     yellow:  '#d79921'
+#     blue:    '#0366d6'
+#     magenta: '#b16286'
+#     cyan:    '#c8e1ff'
+#     white:   '#ffffff'
+
+#   # Bright colors
+#   bright:
+#     black:   '#928374'
+#     red:     '#fb4934'
+#     green:   '#b8bb26'
+#     yellow:  '#fabd2f'
+#     blue:    '#83a598'
+#     magenta: '#d3869b'
+#     cyan:    '#8ec07c'
+#     white:   '#ebdbb2'
+key_bindings:
+     # - { key: Back, chars: "\x7f"}
+     - { key: N, mods: Command, command: { program: "open", args: ["-nb", "io.alacritty"] } }
+     - { key: Comma, mods: Control, action: DecreaseFontSize }
+     - { key: Period, mods: Control, action: IncreaseFontSize }

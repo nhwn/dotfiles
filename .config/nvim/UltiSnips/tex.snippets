@@ -1,0 +1,222 @@
+global !p
+texMathZones = ['texMathZone' + x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z', 'AmsA', 'AmsB', 'AmsC', 'AmsD', 'AmsE', 'AmsF', 'AmsG', 'AmsAS', 'AmsBS', 'AmsCS', 'AmsDS', 'AmsES', 'AmsFS', 'AmsGS' ]]
+texIgnoreMathZones = ['texMathText']
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+ignore = texIgnoreMathZoneIds[0]
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+		return first != ignore
+	except StopIteration:
+		return False
+def create_mat(snip):
+	# get r, c
+	group = snip.buffer[snip.line].strip()
+	r = int(group[0])
+	c = int(group[1])
+	# clean up leftover
+	snip.buffer[snip.line] = ''
+	s = "\\begin{bmatrix}\n"
+	s += " \\\\\\\n".join([" & ".join([f"${i*c+j}" for j in range(1, c + 1)]) for i in range(r)])
+	s += "\n\\end{bmatrix}\n$0"
+	snip.expand_anon(s)
+endglobal
+
+context "math()"
+snippet norm "norm" iA
+\\lVert $1 \\rVert
+endsnippet
+
+snippet pkg "use package" bA
+\\usepackage\{$1\}
+endsnippet
+
+context "math()"
+snippet inv "inverse" iA
+^\{-1\}
+endsnippet
+
+snippet beg "begin environment" bA
+\\begin{$1}
+	$0
+\\end{$1}
+endsnippet
+
+snippet dm "display math" iA
+\\[
+	$0
+\\]
+endsnippet
+
+snippet // "fraction" iA
+\\frac{$1}{$2}
+endsnippet
+
+snippet " eq " "equal &" rA
+ &= $1 \\\\
+endsnippet
+
+snippet " le " "le &" rA
+ &\\le $1 \\\\
+endsnippet
+
+snippet " ge " "ge &" rA
+ &\\ge $1 \\\\
+endsnippet
+
+context "math()"
+snippet not "something not" iA
+_\{0\}
+endsnippet
+
+context "math()"
+snippet "ne " "not equal" rA
+\\neq
+endsnippet
+
+# to use this, highlight everything, press the snippet expansion key (<C-j>), type "/", press snippet expansion key again <C-j>
+snippet / "Fraction" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+context "math()"
+snippet '(?<!\\)(sin|cos|sec|csc|tan|cot|ln|log|exp)' "auto \ and ()" rwA
+\\`!p snip.rv = match.group(1)`($1)
+endsnippet
+
+context "math()"
+snippet '(?<!\\)(pi|lambda|mu|varphi|theta|forall)' "auto \" rwA
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+context "math()"
+snippet dot "dot product" iA
+\\cdot
+endsnippet
+
+context "math()"
+snippet cross "cross product" iA
+\\times
+endsnippet
+
+snippet preamble "preamble template" b
+\\documentclass\{article\}
+\\usepackage\{float\}
+\\restylefloat\{table\}
+\\usepackage\{cancel\}
+\\usepackage\{amsmath\}
+\\usepackage\{amssymb\}
+\\usepackage\{amsthm\}
+\\title\{$1\}
+\\author\{Nathan Nguyen\}
+\\begin\{document\}
+\\maketitle
+	$0
+\\end\{document\}
+endsnippet
+
+snippet enum "enumerate" bA
+\\begin{enumerate}
+	\\item $1
+\\end{enumerate}
+endsnippet
+
+snippet lim "limit" 
+\\lim_{${1:N} \to ${2:\infty}}
+endsnippet
+
+snippet int "integral" i
+\\int_{${1}}^{${2}}
+endsnippet
+
+snippet sum "sum"
+\\sum_{${1:n=0}}^{${2:\infty}}
+endsnippet
+
+snippet ... "ellipsis" iA
+\\cdots
+endsnippet
+
+snippet ooo "infinity" iA 
+\\infty
+endsnippet
+
+snippet it "italics"
+\\emph{$1}
+endsnippet
+
+context "math()"
+snippet pder "partial derivative" iA  
+\\frac\{\\partial $1\}\{\\partial $2\}
+endsnippet
+
+post_jump "create_mat(snip)"
+snippet "mat(\d+)" "m x n matrix: MUST OCCUR ON LINE START" br
+`!p snip.rv = match.group(1)`
+endsnippet
+
+context "math"
+snippet td "to the" iA
+^\{$1\}
+endsnippet
+
+context "math"
+snippet sb "subscript" iA
+_\{$1\}
+endsnippet
+
+context "math()"
+snippet rt "square root" iA
+\\sqrt\{$1\}
+endsnippet
+
+context "math()"
+snippet sq "square" iA
+^\{2\}
+endsnippet
+
+context "math()"
+snippet abs "absolute value" iA
+|$1|
+endsnippet
+
+context "math()"
+snippet mag "magnitude of complex number" iA
+\\sqrt\{\{$1\}^\{2\}+\{$2\}^\{2\}\}
+endsnippet
+
+snippet RR "the real numbers" iA
+\\mathbf\{R\}
+endsnippet
+
+snippet CC "the complex numbers" iA
+\\mathbf\{C\}
+endsnippet
+
+snippet bf "bold font pls" iA
+\\mathbf\{$1\}
+endsnippet
+
+# snippet "(\w)bf" "make bold letter" ir
+# \\mathbf{`!p snip.rv = match.group(1)`}
+# endsnippet
+
+snippet align "align environment" bA
+\\begin\{align*\}
+	$0
+\\end\{align*\}
+endsnippet
+
+snippet im "inline math" i
+\$$1\$
+endsnippet
+
+snippet imd "inline display math" i
+\$\\displaystyle $1 \$
+endsnippet
