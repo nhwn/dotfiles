@@ -59,11 +59,7 @@ alias s="source $HOME/.zshrc"
 alias octave="octave-cli"
 alias closure="java -jar ~/scripts/closure-compiler-v20200719.jar"
 alias cat="bat"
-alias speed="speed-test"
-bindkey -s '^h' '^ucd $HOME\n'
-bindkey -s '^f' '^ufg\n'
-bindkey -s '^o' '^ucd -\n'
-bindkey -s '^y' '^ucd ..\n'
+alias serve="live-server"
 
 # start tmux automatically
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
@@ -104,6 +100,19 @@ n()
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
 }
+
+boom() {
+    echo
+    ls
+    zle redisplay
+}
+bindkey -s '^h' '^ucd $HOME\n'
+bindkey -s '^f' '^ufg\n'
+bindkey -s '^o' '^ucd -\n'
+bindkey -s '^y' '^ucd ..\n'
+bindkey -s '^j' 'pushd ..^M'
+bindkey -s '^k' 'popd^M'
+
 # autojump configuration
 export _Z_CMD="j"
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

@@ -22,6 +22,9 @@ call plug#end()
 " set leader to space (make sure this is above anything that uses leader)
 let mapleader = " "
 
+" remap increment to avoid tmux conflict
+nn <C-i> <C-a>
+
 " find files
 nn <silent><C-p> :Files<cr>
 
